@@ -1,4 +1,4 @@
-# OO사 OO 문제
+# 백준 1110번 문제
 
 > 출처: https://www.acmicpc.net/problem/1110
 
