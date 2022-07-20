@@ -20,6 +20,7 @@ N이 주어졌을 때, N의 사이클의 길이를 구하는 프로그램을 작
 그러나 해당 방법은 복잡하고 코드가 길어져 다른 방법을 참조하였다.
 
 ## 문제 풀이 코드
+```java
 
 import java.util.*;
 public class PlusCycle {
