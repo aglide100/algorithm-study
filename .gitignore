@@ -1,2 +1,20 @@
+# vscode setting
+.vscode
 .history/
-.DS_STORE
+
+# IntelliJ project files 
+*.iml
+*.iws
+*.ipr
+.idea/
+
+# eclipse project file
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store
+
+# Misc
+*.swp
