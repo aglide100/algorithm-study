@@ -1,0 +1,120 @@
+# 백준 17478번 문제
+
+> 출처: https://www.acmicpc.net/problem/17478
+
+## 문제 설명
+
+숫자 카드는 정수 하나가 적혀져 있는 카드이다. 상근이는 숫자 카드 N개를 가지고 있다. 
+정수 M개가 주어졌을 때, 이 수가 적혀있는 숫자 카드를 상근이가 몇 개 가지고 있는지 구하는 프로그램을 작성하시오.
+
+첫째 줄에 상근이가 가지고 있는 숫자 카드의 개수 N(1 ≤ N ≤ 500,000)이 주어진다. 
+둘째 줄에는 숫자 카드에 적혀있는 정수가 주어진다. 
+숫자 카드에 적혀있는 수는 -10,000,000보다 크거나 같고, 10,000,000보다 작거나 같다.
+
+셋째 줄에는 M(1 ≤ M ≤ 500,000)이 주어진다. 
+넷째 줄에는 상근이가 몇 개 가지고 있는 숫자 카드인지 구해야 할 M개의 정수가 주어지며, 이 수는 공백으로 구분되어져 있다. 
+이 수도 -10,000,000보다 크거나 같고, 10,000,000보다 작거나 같다.
+
+## 예제 입력
+1.
+10
+6 3 2 10 10 10 -10 -10 7 3
+8
+10 9 -5 2 3 4 5 -10
+
+## 예제 출력
+1. 3 0 0 1 2 0 0 2
+
+## 문제 접근
+
+처음엔 랜덤 수를 활용하거나 일일이 비교하는 방법을 써봤으나 어려움이 있어 중복 수의 하한선과 상한선을 사용하는 메소드를 쓴 방법을 참고하였다.
+
+## 문제 풀이 코드
+```java
+
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+public class NumberCard2 {
+
+	public static void main(String[] args) throws IOException {
+	
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    int N = Integer.parseInt(br.readLine());
+	int arr[] = new int[N];
+	
+	StringTokenizer st = new StringTokenizer(br.readLine(), " "); // 입력한 숫자들을 구분하기 위함
+	for(int i = 0; i < N; i++) {
+		arr[i] = Integer.parseInt(st.nextToken());
+	}
+	
+	Arrays.sort(arr); // 배열을 순서대로 정렬해야 찾기 쉽다
+	
+	int M = Integer.parseInt(br.readLine());
+	
+	st = new StringTokenizer(br.readLine()," ");
+	StringBuilder sb = new StringBuilder();
+	
+	for(int i = 0; i < M; i++) {
+		int key = Integer.parseInt(st.nextToken());
+
+		// upperBound와 lowerBound의 차이 값을 구한다.
+		sb.append(upperBound(arr, key) - lowerBound(arr, key)).append(' ');
+	}
+	System.out.println(sb);
+}
+
+private static int lowerBound(int[] arr, int key) {
+	int lo = 0; 
+	int hi = arr.length; 
+
+	// lo가 hi랑 같아질 때 까지 반복
+	while (lo < hi) {
+
+		int mid = (lo + hi) / 2; // 중간위치를 구한다.
+
+		
+//		  key 값이 중간 위치의 값보다 작거나 같을 경우
+//		  (중복 원소에 대해 왼쪽으로 탐색하도록 상계를 내린다.)
+		 
+		if (key <= arr[mid]) {
+			hi = mid;
+		}
+
+		else {
+			lo = mid + 1;
+		}
+
+	}
+
+	return lo;
+}
+
+private static int upperBound(int[] arr, int key) {
+	int lo = 0; 
+	int hi = arr.length; 
+
+	// lo가 hi랑 같아질 때 까지 반복
+	while (lo < hi) {
+
+		int mid = (lo + hi) / 2; // 중간위치를 구한다.
+
+		// key값이 중간 위치의 값보다 작을 경우
+		if (key < arr[mid]) {
+			hi = mid;
+		}
+		// 중복원소의 경우 else에서 처리된다.
+		else {
+			lo = mid + 1;
+		}
+
+	}
+
+	return lo;
+}
+
+}
